@@ -5,6 +5,7 @@ import canvasTxt from "canvas-txt";
 function App() {
   const canvasRef = useRef(null);
   const imgRef = useRef({ current: null });
+  const linkRef = useRef(null);
 
   const drawOnCanvas = (text = "") => {
     canvasRef.current.width = imgRef.current.width;
@@ -45,6 +46,13 @@ function App() {
     maskFilterImage.src = "images/sigma.jpg";
   }, []);
 
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    const link = linkRef.current;
+    link.href = canvas.toDataURL();
+    link.click();
+  };
+
   return (
     <>
       <canvas ref={canvasRef} className="output_canvas"></canvas>
@@ -57,6 +65,9 @@ function App() {
         cols={30}
         placeholder="Type text here"
       />
+      <br />
+      <span onClick={handleDownload}>Download Image</span>
+      <a href="" download ref={linkRef} style={{ visibility: "hidden" }} />
     </>
   );
 }
